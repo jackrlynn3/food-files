@@ -54,6 +54,24 @@ def clean_numbers(data):
     # Return data
     return clean_data
 
+def remove_duplicates(dedup_data, *comp_data):
+
+    rem_ind = []
+    used_values = []
+    for i in range(len(dedup_data)):
+        if (dedup_data[i] in used_values):
+            rem_ind.append(i)
+        else:
+            used_values.append(dedup_data[i])
+    
+    rem_ind.reverse()
+    for i in rem_ind:
+        dedup_data.pop(i)
+        for j in range(len(comp_data)):
+            comp_data[j].pop(i)
+
+    return dedup_data, *comp_data
+
 def main():
 
     # Load in all of the files
@@ -73,9 +91,12 @@ def main():
     low_gi = clean_data(low_gi, ['low glycemic index', 'yes', 'no'])
     low_fat = clean_data(low_fat, ['low fat', 'yes', 'no'])
 
-    print(foods)
-    print(high_fiber)
-    print(low_gi)
-    print(low_fat)
+    # Remove Duplicates
+    foods, high_fiber, low_gi, low_fat = remove_duplicates(foods, high_fiber, low_gi, low_fat)
+
+    print(len(foods))
+    print(len(high_fiber))
+    print(len(low_gi))
+    print(len(low_fat))
 
 main()
