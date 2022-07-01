@@ -1,3 +1,5 @@
+# PART 1
+
 import os
 import json
 
@@ -127,6 +129,7 @@ def write_json(file_name, data):
     # Close file
     f.close()
 
+# main: runner for converting raw data into JSON file
 def main():
 
     # Load in all of the files
@@ -154,6 +157,5 @@ def main():
 
     # Write JSON file
     write_json('foods', compiled_dict)
-
 
 main()
