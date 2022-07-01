@@ -26,8 +26,14 @@ def load_in_files(file_name, all_lower=False, capitalized=False):
     # Return the lines
     return lines
 
+# clean_data: give default value for all data not in acceptable list
+#   data: (list(str)) data to be searched
+#   acceptable_response: (list(str)) acceptable values for data
+#   default: (str) default value for rejected strings
+#   return: (list(str)) cleaned data
 def clean_data(data, acceptable_responses, default=None):
     
+    # Check and pass only data in acceptable response; otherwise add default
     clean_data = []
     for datum in data:
         if (datum in acceptable_responses):
@@ -35,6 +41,7 @@ def clean_data(data, acceptable_responses, default=None):
         else:
             clean_data.append(default)
     
+    # Return cleaned data
     return clean_data
 
 # clean_numbers: remove random error numbers in strings
@@ -54,8 +61,13 @@ def clean_numbers(data):
     # Return data
     return clean_data
 
+# remove_duplicates: remove duplicate data
+#   dedup_data: (list(str)) data to be searched for duplicate data
+#   *comp_data: (tuple(list(str))) complimentary data to correspond to dedup data
+#   return: (list(str), tuple(list(str))) deduped data
 def remove_duplicates(dedup_data, *comp_data):
 
+    # Go through and find duplicated data
     rem_ind = []
     used_values = []
     for i in range(len(dedup_data)):
@@ -64,13 +76,28 @@ def remove_duplicates(dedup_data, *comp_data):
         else:
             used_values.append(dedup_data[i])
     
+    # Go back and remove data points that are duplicates; has to be in reverse order to not 
+    #   have indexing issues
     rem_ind.reverse()
     for i in rem_ind:
         dedup_data.pop(i)
         for j in range(len(comp_data)):
             comp_data[j].pop(i)
 
+    # Return deduped data
     return dedup_data, *comp_data
+
+def compile_dict(*data):
+
+    compiled = []
+    for i in range(1, len([*data[0]])):
+        this_dict = dict()
+        for datum in data:
+            this_dict[datum[0]] = datum[i]
+        compiled.append(this_dict)
+
+    return compiled
+
 
 def main():
 
@@ -94,9 +121,12 @@ def main():
     # Remove Duplicates
     foods, high_fiber, low_gi, low_fat = remove_duplicates(foods, high_fiber, low_gi, low_fat)
 
-    print(len(foods))
-    print(len(high_fiber))
-    print(len(low_gi))
-    print(len(low_fat))
+    # Compile files in dictionary
+    compiled_dict = compile_dict(foods, high_fiber, low_gi, low_fat)
+
+    # Write JSON file
+
+    print(compiled_dict)
+
 
 main()
