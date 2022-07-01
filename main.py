@@ -1,4 +1,5 @@
 import os
+import json
 
 # load_in_files: read in files and remove all empty lines
 #   file_name: (str) location of the file of interest
@@ -98,6 +99,25 @@ def compile_dict(*data):
 
     return compiled
 
+def write_json(file_name, data):
+
+     # Get into the correct directory
+    os.chdir(os.path.dirname(__file__))
+
+    # Open the file
+    f = open(f'{file_name}.json', 'w')
+
+    # convert all data in JSON and add to file
+    for i in range(len(data)):
+        if (i == 0):
+            print('['+json.dumps(data[i], indent=4)+',', file=f)
+        elif (i == len(data)-1):
+            print(json.dumps(data[i], indent=4)+']', file=f)
+        else:
+            print(json.dumps(data[i], indent=4)+',', file=f)
+
+    # Close file
+    f.close()
 
 def main():
 
@@ -125,8 +145,7 @@ def main():
     compiled_dict = compile_dict(foods, high_fiber, low_gi, low_fat)
 
     # Write JSON file
-
-    print(compiled_dict)
+    write_json('foods', compiled_dict)
 
 
 main()
