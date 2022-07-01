@@ -88,8 +88,12 @@ def remove_duplicates(dedup_data, *comp_data):
     # Return deduped data
     return dedup_data, *comp_data
 
+# compile_dict: compile data into list of dictionaries
+#   *data: (list(str)) datasets to be converted into dictionaries
+#   return: (list(dict())) list of dictionaries with compiled data
 def compile_dict(*data):
 
+    # Go through and compile each datum into a dictionary
     compiled = []
     for i in range(1, len([*data[0]])):
         this_dict = dict()
@@ -97,8 +101,12 @@ def compile_dict(*data):
             this_dict[datum[0]] = datum[i]
         compiled.append(this_dict)
 
+    # Return list of dictionaries
     return compiled
 
+# write_json: takes in list of dictionary entries and converts them to JSON file
+#   file_name: (str) name of JSON file (exclude .json at end)
+#   data: (list(dict()) list of dictionaries to be converted
 def write_json(file_name, data):
 
      # Get into the correct directory
