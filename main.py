@@ -26,6 +26,21 @@ def load_in_files(file_name, all_lower=False, capitalized=False):
     # Return the lines
     return lines
 
+def clean_data(data, acceptable_responses, default='n/a'):
+    print("hi")
+
+def clean_numbers(data):
+    
+    clean_data = []
+    for datum in data:
+        curr_str = ""
+        for i in range(len(datum)):
+            if (datum[i].isalpha() or datum[i] == '\'' or datum[i] == ' '):
+                curr_str += datum[i]
+        clean_data.append(curr_str)
+    
+    return clean_data
+
 def main():
 
     # Load in all of the files
@@ -33,6 +48,12 @@ def main():
     high_fiber = load_in_files('data/highfiber.txt', all_lower=True)
     low_gi = load_in_files('data/low-glycemic-index.txt', all_lower=True)
     low_fat = load_in_files('data/lowfat.txt', all_lower=True)
+
+    # Clean out all numbers from
+    foods = clean_numbers(foods)
+    high_fiber = clean_numbers(high_fiber)
+    low_gi = clean_numbers(low_gi)
+    low_fat = clean_numbers(low_fat)
 
     print(foods)
     print(high_fiber)
