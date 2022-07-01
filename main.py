@@ -26,11 +26,23 @@ def load_in_files(file_name, all_lower=False, capitalized=False):
     # Return the lines
     return lines
 
-def clean_data(data, acceptable_responses, default='n/a'):
-    print("hi")
+def clean_data(data, acceptable_responses, default=None):
+    
+    clean_data = []
+    for datum in data:
+        if (datum in acceptable_responses):
+            clean_data.append(datum)
+        else:
+            clean_data.append(default)
+    
+    return clean_data
 
+# clean_numbers: remove random error numbers in strings
+#   data: (list(str)) string data to have numbers removed
+#   return: (list(str)) cleaned data
 def clean_numbers(data):
     
+    # Iterate through each datum and remove unncessary numbers
     clean_data = []
     for datum in data:
         curr_str = ""
@@ -39,6 +51,7 @@ def clean_numbers(data):
                 curr_str += datum[i]
         clean_data.append(curr_str)
     
+    # Return data
     return clean_data
 
 def main():
@@ -54,6 +67,11 @@ def main():
     high_fiber = clean_numbers(high_fiber)
     low_gi = clean_numbers(low_gi)
     low_fat = clean_numbers(low_fat)
+
+    # Clean each datasets to have only acceptable answers
+    high_fiber = clean_data(high_fiber, ['high fiber', 'yes', 'no'])
+    low_gi = clean_data(low_gi, ['low glycemic index', 'yes', 'no'])
+    low_fat = clean_data(low_fat, ['low fat', 'yes', 'no'])
 
     print(foods)
     print(high_fiber)
